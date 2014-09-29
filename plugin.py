@@ -9,20 +9,10 @@ local_storage = os.path.join(root_location,'local.db')
 
 yandex_translate_path = os.path.join(root_location,'python-yandex-translate')
 requests_path = os.path.join(root_location,'requests')
-ssl_path = os.path.join(root_location,'backports.ssl')
-six_path = os.path.join(root_location,'six')
-OpenSSL_path = os.path.join(root_location,'pyopenssl')
-cryptography_path = os.path.join(root_location,'cryptography')
-cffi_path = os.path.join(root_location,'cffi-0.8.6')
 sublimessl = os.path.join(root_location,'sublimessl')
 
 sys.path.insert(0, yandex_translate_path)
 sys.path.insert(0, requests_path)
-# sys.path.insert(0, ssl_path)
-sys.path.insert(0, six_path)
-# sys.path.insert(0, OpenSSL_path)
-# sys.path.insert(0, cryptography_path)
-# sys.path.insert(0, cffi_path)
 sys.path.insert(0, sublimessl)
 
 import yandex_translate
@@ -42,10 +32,7 @@ def plugin_loaded():
         return lambda self,amt=None,decode_content=None:func(self,None,decode_content)
     yandex_translate.requests.packages.urllib3.response.HTTPResponse.stream = urllib3_HTTPResponse_stream_wrapper()
     print ("Plugin RussianVariableTranslate is loaded")
-    print (YandexTranslate)
-    print (yandex_translate.requests)
-    print (yandex_translate.requests.packages.urllib3.connection)
-    print (yandex_translate.requests.packages.urllib3.connection.ssl)
+
 
 class Translator(object):
     def __init__(self):
@@ -93,6 +80,3 @@ class RussianVariableTranslateCommand(sublime_plugin.TextCommand):
 
     def insert_translated_text(self,translated_text):
         self.view.run_command("insert",{"characters":translated_text})
-
-#парень
-#goosebraking distance seal

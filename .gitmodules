@@ -1,18 +1,3 @@
-[submodule "six"]
-	path = six
-	url = git@github.com:Ubiquiti-UniTel/six.git
-[submodule "cryptography"]
-	path = cryptography
-	url = git@github.com:pyca/cryptography.git
-[submodule "pyopenssl"]
-	path = pyopenssl
-	url = git@github.com:pyca/pyopenssl.git
-[submodule "backports.ssl"]
-	path = backports.ssl
-	url = git@github.com:alekstorm/backports.ssl.git
-[submodule "pycparser"]
-	path = pycparser
-	url = git@github.com:eliben/pycparser.git
 [submodule "requests"]
 	path = requests
 	url = git@github.com:kennethreitz/requests.git
