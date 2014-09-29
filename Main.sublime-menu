@@ -1,0 +1,38 @@
+[
+    {
+        "mnemonic": "n",
+        "caption": "Preferences",
+        "id": "preferences",
+        "children": [
+            {
+            "mnemonic": "P",
+            "caption": "Package Settings",
+            "id": "package-settings",
+            "children": [
+                {
+                "caption": "Russian Variable Translate",
+                "children": [
+                    {
+                    "caption": "Settings – Default",
+                    "args": {
+                    "file": "${packages}/my-sublime-text-3-ya-translate-plugin/Main.sublime-settings"
+                    },
+                    "command": "open_file"
+                    },
+                    {
+                    "caption": "Settings – User",
+                    "args": {
+                    "file": "${packages}/User/RussianVariableTranslate.sublime-settings"
+                    },
+                    "command": "open_file"
+                    },
+                    {
+                    "caption": "-"
+                    }
+                    ]
+                    }
+                ]
+            }
+        ]
+    }
+]

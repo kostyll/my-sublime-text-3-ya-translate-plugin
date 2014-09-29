@@ -49,13 +49,16 @@ class Translator(object):
             self.loaddict()
             return
         for line in dictfile:
-            word, translated_word = line.split('<===>')
-            self.dict.update({word:translated_word})
+            try:
+                word, translated_word = line.split('<===>')
+                self.dict.update({word:translated_word})
+            except:
+                continue
 
     def savedict(self):
         with open(local_storage,'wt') as dictfile:
             for word,translated_word in self.dict.items():
-                dictfile.write("{}<===>{}\n".format(word,translated_word))
+                dictfile.write("{}<===>{}".format(word,translated_word))
 
     def add_translated_word(self,word,translated_word):
         self.dict[word] = translated_word

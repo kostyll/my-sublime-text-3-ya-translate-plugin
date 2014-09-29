@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "Translate from RU to EN",
+        "command": "russian_variable_translate"
+    },
+]
