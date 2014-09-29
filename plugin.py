@@ -50,7 +50,7 @@ class Translator(object):
             return
         for line in dictfile:
             try:
-                word, translated_word = line.split('<===>')
+                word, translated_word = map(lambda x: x.strip('\n'),line.split('<===>'))
                 self.dict.update({word:translated_word})
             except:
                 continue
@@ -58,7 +58,7 @@ class Translator(object):
     def savedict(self):
         with open(local_storage,'wt') as dictfile:
             for word,translated_word in self.dict.items():
-                dictfile.write("{}<===>{}".format(word,translated_word))
+                dictfile.write("{}<===>{}\n".format(word,translated_word))
 
     def add_translated_word(self,word,translated_word):
         self.dict[word] = translated_word
@@ -73,6 +73,8 @@ class Translator(object):
                 if translated_text['code'] != 200:
                     return
                 translated_word = translated_text['text'][0]
+                if len(text.split(' ')) > 1:
+                    return translated_word
                 self.add_translated_word(text, translated_word)
                 self.savedict()
                 self.cache.update({text:self.dict[text]})
