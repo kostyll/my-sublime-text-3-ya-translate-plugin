@@ -1,6 +1,6 @@
-[submodule "requests"]
-	path = requests
-	url = git@github.com:kennethreitz/requests.git
 [submodule "python-yandex-translate"]
 	path = python-yandex-translate
 	url = git@github.com:kostyll/python-yandex-translate.git
+[submodule "requests"]
+	path = requests
+	url = git@github.com:kennethreitz/requests.git
