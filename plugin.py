@@ -13,31 +13,55 @@ ssl_path = os.path.join(root_location,'backports.ssl')
 six_path = os.path.join(root_location,'six')
 OpenSSL_path = os.path.join(root_location,'pyopenssl')
 cryptography_path = os.path.join(root_location,'cryptography')
+cffi_path = os.path.join(root_location,'cffi-0.8.6')
+sublimessl = os.path.join(root_location,'sublimessl')
 
 sys.path.insert(0, yandex_translate_path)
 sys.path.insert(0, requests_path)
-sys.path.insert(0, ssl_path)
+# sys.path.insert(0, ssl_path)
 sys.path.insert(0, six_path)
-sys.path.insert(0, OpenSSL_path)
-sys.path.insert(0, cryptography_path)
+# sys.path.insert(0, OpenSSL_path)
+# sys.path.insert(0, cryptography_path)
+# sys.path.insert(0, cffi_path)
+sys.path.insert(0, sublimessl)
 
-# import ssl   
-
+import yandex_translate
 from yandex_translate import YandexTranslate
+
+from SSL import ssl
+
+def plugin_loaded():
+    from imp import reload
+    reload(yandex_translate)
+    reload(yandex_translate.requests)
+    reload(yandex_translate.requests.packages.urllib3.connection)
+    yandex_translate.requests.packages.urllib3.connection.ssl = ssl
+
+    func = yandex_translate.requests.packages.urllib3.response.HTTPResponse.stream
+    def urllib3_HTTPResponse_stream_wrapper():
+        return lambda self,amt=None,decode_content=None:func(self,None,decode_content)
+    yandex_translate.requests.packages.urllib3.response.HTTPResponse.stream = urllib3_HTTPResponse_stream_wrapper()
+    print ("Plugin RussianVariableTranslate is loaded")
+    print (YandexTranslate)
+    print (yandex_translate.requests)
+    print (yandex_translate.requests.packages.urllib3.connection)
+    print (yandex_translate.requests.packages.urllib3.connection.ssl)
 
 class Translator(object):
     def __init__(self):
         self.cache = {}
         self.handler = YandexTranslate(os.environ['YA_TRANSLATE_KEY'])
- 
+
     def translate(self,text):
         if text not in self.cache.keys():
             print ("Query API...")
             translated_text = self.handler.translate(text,'ru-en')
-            self.cache.update({text:translated_text})
+            if translated_text['code'] != 200:
+                return
+            self.cache.update({text:translated_text['text'][0]})
         else:
             print ("From cache...")
-            return self.cache[text]
+        return self.cache[text]
 
 translator = Translator()
 
@@ -46,7 +70,12 @@ class RussianVariableTranslateCommand(sublime_plugin.TextCommand):
     Translates russian variables to English via yandex translate api + localstore db(text file).
     """
 
-    def run(self,edit):
+    def run(self,edit,**kwargs):
+        if len(kwargs.keys())>0:
+            print ("kwargs =",kwargs)
+            print (translator.translate(kwargs['text']))
+            return None
+        print ("running command")
         for region in self.view.sel():
             if not region.empty():
                 text = self.view.substr(region)
@@ -59,8 +88,11 @@ class RussianVariableTranslateCommand(sublime_plugin.TextCommand):
 
     def translate(self,text):
         translated_text = translator.translate(text)
+        print("translated_text=",translated_text)
         self.insert_translated_text(translated_text)
 
     def insert_translated_text(self,translated_text):
         self.view.run_command("insert",{"characters":translated_text})
 
+#парень
+#goosebraking distance seal
