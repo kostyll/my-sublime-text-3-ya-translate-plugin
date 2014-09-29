@@ -79,7 +79,7 @@ class Translator(object):
                 self.savedict()
                 self.cache.update({text:self.dict[text]})
             else:
-                pass
+                self.cache.update({text:self.dict[text]})
         else:
             print ("From cache...")
         return self.cache[text]
