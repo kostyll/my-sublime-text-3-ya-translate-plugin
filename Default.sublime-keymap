@@ -1,3 +1,5 @@
 [
     {"keys": [ "ctrl+alt+shift+j"], "command": "russian_variable_translate" },
+    {"keys": [ "ctrl+alt+shift+r"], "command": "translate_russian_to_ukrainian" },
+    {"keys": [ "ctrl+alt+shift+e"], "command": "translate_english_to_ukrainian" },
 ]

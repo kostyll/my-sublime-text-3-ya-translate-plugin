@@ -84,6 +84,14 @@ class Translator(object):
             print ("From cache...")
         return self.cache[text]
 
+    def translate_russian_to_ukrainian(self,text):
+        translated_text = self.handler.translate(text, 'ru-uk')['text'][0]
+        return translated_text
+
+    def translate_english_to_ukrainian(self,text):
+        translated_text = self.handler.translate(text, 'en-uk')['text'][0]
+        return translated_text
+
 translator = Translator()
 
 class RussianVariableTranslateCommand(sublime_plugin.TextCommand):
@@ -108,3 +116,36 @@ class RussianVariableTranslateCommand(sublime_plugin.TextCommand):
 
     def insert_translated_text(self,translated_text):
         self.view.run_command("insert",{"characters":translated_text})
+
+
+class TranslateRussianToUkrainianCommand(sublime_plugin.TextCommand):
+    """
+    Translates selected text from russian to ukrainian.
+    """
+
+    def run(self,edit):
+        for region in self.view.sel():
+            if not region.empty():
+                text = self.view.substr(region)
+                self.translate(text)
+
+    def translate(self,text):
+        translated_text = translator.translate_russian_to_ukrainian(text)
+        self.view.run_command("insert",{"characters":translated_text})
+
+
+class TranslateEnglishToUkrainianCommand(sublime_plugin.TextCommand):
+    """
+    Translates selected text from english to ukrainian.
+    """
+
+    def run(self,edit):
+        for region in self.view.sel():
+            if not region.empty():
+                text = self.view.substr(region)
+                self.translate(text)
+
+    def translate(self,text):
+        translated_text = translator.translate_english_to_ukrainian(text)
+        self.view.run_command("insert",{"characters":translated_text})
+
