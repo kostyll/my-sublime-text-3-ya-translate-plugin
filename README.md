@@ -8,3 +8,5 @@ This plugin helps ukrainian and russian programmers name their variables correct
 Exported command is "russian_variable_translate". which gets selected text/queries raw input text - translates  and replace/insert_at_cursor translated version of the last one.
 
 Plugin contains some caching mechanism and stores every queried word+translated word into local file to prevent duplicate queries.
+
+Except it there is 2 additional commands that perform translation from ENGLISH and RUSSIAN language to UKRAINIAN (also using Yandex Translate API)
